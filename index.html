@@ -63,6 +63,7 @@
     }
     #main .pra {
       max-width: 1200px;
+      max-height: 100%;
     }
 
     .two .text-area-hover {
@@ -115,7 +116,7 @@
       </div>
       <div class="text">
         <h1 class="abril-fatface-regular he">Hello World</h1>
-        <p class="comfortaa title-h1">
+        <p class="title-h1 comfortaa">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit
           sapiente modi laborum commodi illum ad quae esse! Delectus placeat,
           laborum amet ducimus vero quas reiciendis cumque minus natus corrupti
@@ -137,65 +138,66 @@
               adipisicing elit. Aspernatur, libero itaque. Corrupti, fugit?
               Ducimus, ad ullam doloribus saepe perspiciatis culpa consequatur
               optio, qui esse laboriosam, illo dicta? Similique, unde totam.
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Aspernatur, libero itaque. Corrupti, fugit? Ducimus, ad ullam
+              doloribus saepe perspiciatis culpa consequatur optio, qui esse
+              laboriosam, illo dicta? Similique, unde totam. Lorem ipsum, dolor
+              sit amet consectetur adipisicing elit. Aspernatur, libero itaque.
+              Corrupti, fugit? Ducimus, ad ullam doloribus saepe perspiciatis
+              culpa consequatur optio, qui esse laboriosam, illo dicta?
+              Similique, unde totam. Lorem ipsum, dolor sit amet consectetur
+              adipisicing elit. Aspernatur, libero itaque. Corrupti, fugit?
+              Ducimus, ad ullam doloribus saepe perspiciatis culpa consequatur
+              optio, qui esse laboriosam, illo dicta? Similique, unde totam.
             </p>
           </div>
         </div>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://unpkg.com/split-type"></script>
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
     <!-- <script src="https://assets.codepen.io/16327/SplitText3.min.js"></script> -->
     <script>
-      // text effect with gsap
-      // gsap.registerPlugin(SplitText);
-      // const tl = gsap.timeline();
-      // const mySplitText = new SplitText(".title-h1 , .he", {
-      //   type: "chars",
-      // });
-      // const chars = mySplitText.chars;
-      // gsap.set(".title-h1, .he", { perspective: 100 });
-      // tl.from(chars, {
-      //   duration: 0.4,
-      //   opacity: 0,
-      //   y: 80,
-      //   transformOrigin: "50 50%",
-      //   stagger: 0.01,
-      //   delay: 0,
-      // });
-      // text effect with gsap end
+      gsap.registerPlugin(ScrollTrigger);
+      const splitTypes = document.querySelectorAll(".mask");
+      splitTypes.forEach((char, i) => {
+        const text = new SplitType(char, { types: "chars" });
 
-      // text eff with yt
-      // Register the ScrollTrigger plugin
-      // gsap.registerPlugin(ScrollTrigger);
-
-      // Use the ScrollTrigger plugin to control the animation
-      document.querySelectorAll(".title-h1, .pra").forEach((el) => {
-        const text = new SplitType(el, { types: "chars,words" });
-        gsap.from(".title-h1 .chars, .pra .chars", {
-          y: 50,
-          stagger: 0.1,
-          duration: 1,
-          ease: "power1.out",
+        gsap.from(text.chars, {
           scrollTrigger: {
-            trigger: ".title-h1, .pra",
-            start: "50% 50%",
-            end: "50% 50%",
+            trigger: ".pra",
+            start: "20% 100%",
+            end: "100% 100%",
             scrub: true,
-            markers: true,
+            markers: false,
           },
+          opacity: 0.2,
+          duration: 5,
+          stagger: 0.1,
         });
       });
+
+      const hero = document.querySelectorAll(".title-h1");
+      hero.forEach((words, i) => {
+        const text = new SplitType(words, { types: "words" });
+
+        gsap.from(text.words, {
+          y: 20,
+          opacity: 0,
+          duration: 0.1,
+          stagger: 0.2, // Adjust this line
+        });
+      });
+
       // text eff with yt end
 
       // scroll js
       const lenis = new Lenis();
 
-      lenis.on("scroll", (e) => {
-        // console.log(e);
-      });
+      lenis.on("scroll", (e) => {});
 
       function raf(time) {
         lenis.raf(time);
